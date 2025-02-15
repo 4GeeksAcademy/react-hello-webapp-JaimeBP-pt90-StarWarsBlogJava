@@ -1,45 +1,50 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+    return {
+        store: {
+            characters: [], // Almacenar personajes
+            vehicles: [], // Almacenar vehículos
+            planets: [], // Almacenar planetas
+            favorites: [] // Lista de favoritos
+        },
+        actions: {
+            // Obtener datos de la API
+            loadData: async () => {
+                try {
+                    // Fetch de personajes
+                    let peopleResponse = await fetch("https://www.swapi.tech/api/people");
+                    let peopleData = await peopleResponse.json();
+                    
+                    // Fetch de vehículos
+                    let vehiclesResponse = await fetch("https://www.swapi.tech/api/vehicles");
+                    let vehiclesData = await vehiclesResponse.json();
+                    
+                    // Fetch de planetas
+                    let planetsResponse = await fetch("https://www.swapi.tech/api/planets");
+                    let planetsData = await planetsResponse.json();
+                    
+                    // Guardar los datos en el store
+                    setStore({
+                        characters: peopleData.results,
+                        vehicles: vehiclesData.results,
+                        planets: planetsData.results
+                    });
+                } catch (error) {
+                    console.error("Error fetching data: ", error);
+                }
+            },
+            
+            // Agregar o quitar favoritos
+            toggleFavorite: (item) => {
+                const store = getStore();
+                const exists = store.favorites.some(fav => fav.uid === item.uid);
+                if (exists) {
+                    setStore({ favorites: store.favorites.filter(fav => fav.uid !== item.uid) });
+                } else {
+                    setStore({ favorites: [...store.favorites, item] });
+                }
+            }
+        }
+    };
 };
 
 export default getState;

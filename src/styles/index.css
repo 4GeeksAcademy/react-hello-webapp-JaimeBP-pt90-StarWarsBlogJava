@@ -1,3 +1,57 @@
-/* 
-    General Styles
-*/
+/* Fondo negro en toda la app */
+body {
+    background-color: #000;
+    color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Color de los títulos */
+h1, h2, h3, h4, h5, h6 {
+    color: #fff;
+}
+
+/* Ajusta las tarjetas para que tengan el estilo Star Wars */
+.card {
+    background-color: #111;
+    border: 1px solid #ff3131;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    border-color: #ff6161;
+}
+
+.navbar {
+    background-color: #111 !important;
+    border-bottom: 2px solid #ff3131;
+}
+
+.btn-primary {
+    background-color: #ff3131;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #ff6161;
+}
+
+/* Dropdown de favoritos */
+.dropdown-menu {
+    background-color: #111;
+    border: 1px solid #ff3131;
+}
+
+.dropdown-item {
+    color: white !important;
+}
+
+.dropdown-item:hover {
+    background-color: #ff3131 !important;
+}
+
+/* Separador rojo estilo Star Wars */
+hr {
+    border: 1px solid #ff3131;
+}
