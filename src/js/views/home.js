@@ -23,7 +23,7 @@ export const Home = () => {
                             />
                             <div className="card-body">
                                 <h5 className="card-title">{character.name}</h5>
-                                <p className="card-text">Gender: {character.gender || "Unknown"}</p>
+                                <p className="card-text">Gender: {character.gender ? character.gender : "Unknown"}</p>
                                 <Link to={`/people/${character.uid}`} className="btn btn-primary">Learn more!</Link>
                                 <button
                                     className="btn btn-outline-warning ms-2"
@@ -51,7 +51,7 @@ export const Home = () => {
                             />
                             <div className="card-body">
                                 <h5 className="card-title">{vehicle.name}</h5>
-                                <p className="card-text">Model: {vehicle.model || "Unknown"}</p>
+                                <p className="card-text">Model: {vehicle.model ? vehicle.model : "Unknown"}</p>
                                 <Link to={`/vehicles/${vehicle.uid}`} className="btn btn-primary">Learn more!</Link>
                                 <button
                                     className="btn btn-outline-warning ms-2"
@@ -79,7 +79,7 @@ export const Home = () => {
                             />
                             <div className="card-body">
                                 <h5 className="card-title">{planet.name}</h5>
-                                <p className="card-text">Climate: {planet.climate || "Unknown"}</p>
+                                <p className="card-text">Climate: {planet.climate ? planet.climate : "Unknown"}</p>
                                 <Link to={`/planets/${planet.uid}`} className="btn btn-primary">Learn more!</Link>
                                 <button
                                     className="btn btn-outline-warning ms-2"
