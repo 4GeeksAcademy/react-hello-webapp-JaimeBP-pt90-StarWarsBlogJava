@@ -55,3 +55,9 @@ h1, h2, h3, h4, h5, h6 {
 hr {
     border: 1px solid #ff3131;
 }
+
+.favorite-button {
+    background-color: yellow !important;
+    border-color: yellow !important;
+    color: black !important;
+}

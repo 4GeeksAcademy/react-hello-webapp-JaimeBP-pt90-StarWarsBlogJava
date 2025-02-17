@@ -26,11 +26,13 @@ export const Home = () => {
                                 <p className="card-text">Gender: {character.gender ? character.gender : "Unknown"}</p>
                                 <Link to={`/people/${character.uid}`} className="btn btn-primary">Learn more!</Link>
                                 <button
-                                    className="btn btn-outline-warning ms-2"
-                                    onClick={() => actions.toggleFavorite(character)}
+                                    className={`btn ms-2 ${store.favorites.some(fav => fav.uid === character.uid && fav.type === "people") ? "favorite-button" : "btn-outline-warning"}`}
+                                    onClick={() => actions.toggleFavorite(character, "people")}
                                 >
                                     ❤️
                                 </button>
+
+
                             </div>
                         </div>
                     </div>
@@ -54,8 +56,8 @@ export const Home = () => {
                                 <p className="card-text">Model: {vehicle.model ? vehicle.model : "Unknown"}</p>
                                 <Link to={`/vehicles/${vehicle.uid}`} className="btn btn-primary">Learn more!</Link>
                                 <button
-                                    className="btn btn-outline-warning ms-2"
-                                    onClick={() => actions.toggleFavorite(vehicle)}
+                                    className={`btn ms-2 ${store.favorites.some(fav => fav.uid === vehicle.uid && fav.type === "vehicles") ? "favorite-button" : "btn-outline-warning"}`}
+                                    onClick={() => actions.toggleFavorite(vehicle, "vehicles")}
                                 >
                                     ❤️
                                 </button>
@@ -82,8 +84,8 @@ export const Home = () => {
                                 <p className="card-text">Climate: {planet.climate ? planet.climate : "Unknown"}</p>
                                 <Link to={`/planets/${planet.uid}`} className="btn btn-primary">Learn more!</Link>
                                 <button
-                                    className="btn btn-outline-warning ms-2"
-                                    onClick={() => actions.toggleFavorite(planet)}
+                                    className={`btn ms-2 ${store.favorites.some(fav => fav.uid === planet.uid && fav.type === "planets") ? "favorite-button" : "btn-outline-warning"}`}
+                                    onClick={() => actions.toggleFavorite(planet, "planets")}
                                 >
                                     ❤️
                                 </button>

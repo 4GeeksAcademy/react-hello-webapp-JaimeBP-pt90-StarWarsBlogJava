@@ -24,34 +24,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     // Obtener detalles individuales de cada entidad
                     const fetchDetails = async (entity, category) => {
-                    const response = await fetch(`https://www.swapi.tech/api/${category}/${entity.uid}`);
-                    const data = await response.json();
-                    return { ...entity, ...data.result.properties }; // Agregar propiedades al objeto
+                        const response = await fetch(`https://www.swapi.tech/api/${category}/${entity.uid}`);
+                        const data = await response.json();
+                        return { ...entity, ...data.result.properties }; // Agregar propiedades al objeto
                     };
 
                     // Mapear cada entidad con sus detalles
-        let characters = await Promise.all(peopleData.results.map(person => fetchDetails(person, "people")));
-        let vehicles = await Promise.all(vehiclesData.results.map(vehicle => fetchDetails(vehicle, "vehicles")));
-        let planets = await Promise.all(planetsData.results.map(planet => fetchDetails(planet, "planets")));
+                    let characters = await Promise.all(peopleData.results.map(person => fetchDetails(person, "people")));
+                    let vehicles = await Promise.all(vehiclesData.results.map(vehicle => fetchDetails(vehicle, "vehicles")));
+                    let planets = await Promise.all(planetsData.results.map(planet => fetchDetails(planet, "planets")));
 
                     // Guardar los datos en el store
                     setStore({ characters, vehicles, planets });
-                    
+
                 } catch (error) {
                     console.error("Error fetching data: ", error);
                 }
             },
 
             // Agregar o quitar favoritos
-            toggleFavorite: (item) => {
+            toggleFavorite: (item, entityType) => {
                 const store = getStore();
-                const exists = store.favorites.some(fav => fav.uid === item.uid);
+                const exists = store.favorites.some(fav => fav.uid === item.uid && fav.type === entityType);
+
                 if (exists) {
-                    setStore({ favorites: store.favorites.filter(fav => fav.uid !== item.uid) });
+                    // Si ya está en favoritos, lo eliminamos filtrando por UID y tipo
+                    setStore({
+                        favorites: store.favorites.filter(fav => !(fav.uid === item.uid && fav.type === entityType))
+                    });
                 } else {
-                    setStore({ favorites: [...store.favorites, item] });
+                    // Si no está en favoritos, lo añadimos con su tipo
+                    setStore({
+                        favorites: [...store.favorites, { ...item, type: entityType }]
+                    });
                 }
             }
+
         }
     };
 };

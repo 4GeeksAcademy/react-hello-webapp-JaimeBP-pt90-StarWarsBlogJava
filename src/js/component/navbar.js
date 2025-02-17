@@ -38,10 +38,11 @@ export const Navbar = () => {
                                     </Link>
                                     <button
                                         className="btn btn-sm btn-danger ms-2"
-                                        onClick={() => actions.toggleFavorite(fav)}
+                                        onClick={() => actions.toggleFavorite(fav, fav.type)}
                                     >
                                         ❌
                                     </button>
+
                                 </li>
                             ))
                         )}

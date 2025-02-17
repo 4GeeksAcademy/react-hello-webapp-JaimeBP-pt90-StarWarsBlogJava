@@ -115,11 +115,13 @@ export const Single = () => {
                     <div className="mt-4">
                         <Link to="/" className="btn btn-secondary">Back Home</Link>
                         <button
-                            className="btn btn-outline-warning ms-3"
-                            onClick={() => actions.toggleFavorite({ uid: theid, name: details.name })}
+                            className={`btn ms-3 ${store.favorites.some(fav => fav.uid === theid && fav.type === entityType) ? "favorite-button" : "btn-outline-warning"}`}
+                            onClick={() => actions.toggleFavorite({ uid: theid, name: details.name }, entityType)}
                         >
                             ❤️ Add to Favorites
                         </button>
+
+
                     </div>
                 </div>
             </div>
