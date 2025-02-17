@@ -13,15 +13,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     // Fetch de personajes
                     let peopleResponse = await fetch("https://www.swapi.tech/api/people");
                     let peopleData = await peopleResponse.json();
-                    
+
                     // Fetch de vehículos
                     let vehiclesResponse = await fetch("https://www.swapi.tech/api/vehicles");
                     let vehiclesData = await vehiclesResponse.json();
-                    
+
                     // Fetch de planetas
                     let planetsResponse = await fetch("https://www.swapi.tech/api/planets");
                     let planetsData = await planetsResponse.json();
-                    
+
                     // Guardar los datos en el store
                     setStore({
                         characters: peopleData.results,
@@ -32,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error fetching data: ", error);
                 }
             },
-            
+
             // Agregar o quitar favoritos
             toggleFavorite: (item) => {
                 const store = getStore();

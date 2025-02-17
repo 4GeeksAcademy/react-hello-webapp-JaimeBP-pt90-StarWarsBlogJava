@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { useLocation } from "react-router-dom";
 
 export const Single = () => {
     const { store, actions } = useContext(Context);
@@ -9,11 +10,16 @@ export const Single = () => {
     const [loading, setLoading] = useState(true);
 
     // Determinar si es un personaje, vehículo o planeta
-    const entityType = store.characters.find(item => item.uid === theid)
-        ? "people"
-        : store.vehicles.find(item => item.uid === theid)
-        ? "vehicles"
-        : "planets";
+    const location = useLocation(); // Obtiene la ruta actual
+    let entityType = "";
+
+    if (location.pathname.includes("people")) {
+        entityType = "people";
+    } else if (location.pathname.includes("vehicles")) {
+        entityType = "vehicles";
+    } else if (location.pathname.includes("planets")) {
+        entityType = "planets";
+    }
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -31,9 +37,9 @@ export const Single = () => {
                 }
 
                 setDetails({
-					...data.result.properties, 
-					description: data.result.description // ← Ahora sí toma la descripción correcta
-				});
+                    ...data.result.properties,
+                    description: data.result.description // ← Ahora sí toma la descripción correcta
+                });
             } catch (error) {
                 console.error("Error fetching details:", error);
             } finally {
@@ -53,10 +59,10 @@ export const Single = () => {
             <div className="row">
                 {/* IMAGEN */}
                 <div className="col-md-4">
-                    <img 
-                        src={`https://starwars-visualguide.com/assets/img/${entityType}/${theid}.jpg`} 
+                    <img
+                        src={`https://starwars-visualguide.com/assets/img/${entityType}/${theid}.jpg`}
                         className="img-fluid rounded"
-                        alt={details.name} 
+                        alt={details.name}
                         onError={(e) => e.target.src = "https://via.placeholder.com/400x200"}
                     />
                 </div>
@@ -69,19 +75,46 @@ export const Single = () => {
                     </p>
 
                     <ul className="list-group">
-                        <li className="list-group-item"><strong>Height:</strong> {details.height || "Unknown"}</li>
-                        <li className="list-group-item"><strong>Mass:</strong> {details.mass || "Unknown"}</li>
-                        <li className="list-group-item"><strong>Hair Color:</strong> {details.hair_color || "Unknown"}</li>
-                        <li className="list-group-item"><strong>Skin Color:</strong> {details.skin_color || "Unknown"}</li>
-                        <li className="list-group-item"><strong>Eye Color:</strong> {details.eye_color || "Unknown"}</li>
-                        <li className="list-group-item"><strong>Birth Year:</strong> {details.birth_year || "Unknown"}</li>
-                        <li className="list-group-item"><strong>Gender:</strong> {details.gender || "Unknown"}</li>
+                        {entityType === "people" && (
+                            <>
+                                <li className="list-group-item"><strong>Height:</strong> {details.height || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Mass:</strong> {details.mass || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Hair Color:</strong> {details.hair_color || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Skin Color:</strong> {details.skin_color || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Eye Color:</strong> {details.eye_color || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Birth Year:</strong> {details.birth_year || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Gender:</strong> {details.gender || "Unknown"}</li>
+                            </>
+                        )}
+
+                        {entityType === "vehicles" && (
+                            <>
+                                <li className="list-group-item"><strong>Model:</strong> {details.model || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Manufacturer:</strong> {details.manufacturer || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Cost:</strong> {details.cost_in_credits || "Unknown"} credits</li>
+                                <li className="list-group-item"><strong>Speed:</strong> {details.max_atmosphering_speed || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Crew:</strong> {details.crew || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Passengers:</strong> {details.passengers || "Unknown"}</li>
+                            </>
+                        )}
+
+                        {entityType === "planets" && (
+                            <>
+                                <li className="list-group-item"><strong>Climate:</strong> {details.climate || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Terrain:</strong> {details.terrain || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Diameter:</strong> {details.diameter || "Unknown"} km</li>
+                                <li className="list-group-item"><strong>Population:</strong> {details.population || "Unknown"}</li>
+                                <li className="list-group-item"><strong>Orbital Period:</strong> {details.orbital_period || "Unknown"} days</li>
+                                <li className="list-group-item"><strong>Rotation Period:</strong> {details.rotation_period || "Unknown"} hours</li>
+                            </>
+                        )}
                     </ul>
+
 
                     {/* BOTONES */}
                     <div className="mt-4">
                         <Link to="/" className="btn btn-secondary">Back Home</Link>
-                        <button 
+                        <button
                             className="btn btn-outline-warning ms-3"
                             onClick={() => actions.toggleFavorite({ uid: theid, name: details.name })}
                         >

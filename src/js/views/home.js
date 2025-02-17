@@ -15,17 +15,17 @@ export const Home = () => {
                 {store.characters.map(character => (
                     <div key={character.uid} className="col-md-4">
                         <div className="card mb-3">
-                            <img 
+                            <img
                                 src={`https://starwars-visualguide.com/assets/img/characters/${character.uid}.jpg`}
-                                className="card-img-top" 
-                                alt={character.name} 
-                                onError={(e) => e.target.src = "https://via.placeholder.com/400x200"} 
+                                className="card-img-top"
+                                alt={character.name}
+                                onError={(e) => e.target.src = "https://via.placeholder.com/400x200"}
                             />
                             <div className="card-body">
                                 <h5 className="card-title">{character.name}</h5>
                                 <p className="card-text">Gender: {character.gender || "Unknown"}</p>
-                                <Link to={`/single/${character.uid}`} className="btn btn-primary">Learn more!</Link>
-                                <button 
+                                <Link to={`/people/${character.uid}`} className="btn btn-primary">Learn more!</Link>
+                                <button
                                     className="btn btn-outline-warning ms-2"
                                     onClick={() => actions.toggleFavorite(character)}
                                 >
@@ -43,17 +43,17 @@ export const Home = () => {
                 {store.vehicles.map(vehicle => (
                     <div key={vehicle.uid} className="col-md-4">
                         <div className="card mb-3">
-                            <img 
-                                src={`https://starwars-visualguide.com/assets/img/vehicles/${vehicle.uid}.jpg`} 
-                                className="card-img-top" 
-                                alt={vehicle.name} 
+                            <img
+                                src={`https://starwars-visualguide.com/assets/img/vehicles/${vehicle.uid}.jpg`}
+                                className="card-img-top"
+                                alt={vehicle.name}
                                 onError={(e) => e.target.src = "https://via.placeholder.com/400x200"}
                             />
                             <div className="card-body">
                                 <h5 className="card-title">{vehicle.name}</h5>
                                 <p className="card-text">Model: {vehicle.model || "Unknown"}</p>
-                                <Link to={`/single/${vehicle.uid}`} className="btn btn-primary">Learn more!</Link>
-                                <button 
+                                <Link to={`/vehicles/${vehicle.uid}`} className="btn btn-primary">Learn more!</Link>
+                                <button
                                     className="btn btn-outline-warning ms-2"
                                     onClick={() => actions.toggleFavorite(vehicle)}
                                 >
@@ -71,17 +71,17 @@ export const Home = () => {
                 {store.planets.map(planet => (
                     <div key={planet.uid} className="col-md-4">
                         <div className="card mb-3">
-                            <img 
-                                src={`https://starwars-visualguide.com/assets/img/planets/${planet.uid}.jpg`} 
-                                className="card-img-top" 
-                                alt={planet.name} 
+                            <img
+                                src={`https://starwars-visualguide.com/assets/img/planets/${planet.uid}.jpg`}
+                                className="card-img-top"
+                                alt={planet.name}
                                 onError={(e) => e.target.src = "https://via.placeholder.com/400x200"}
                             />
                             <div className="card-body">
                                 <h5 className="card-title">{planet.name}</h5>
                                 <p className="card-text">Climate: {planet.climate || "Unknown"}</p>
-                                <Link to={`/single/${planet.uid}`} className="btn btn-primary">Learn more!</Link>
-                                <button 
+                                <Link to={`/planets/${planet.uid}`} className="btn btn-primary">Learn more!</Link>
+                                <button
                                     className="btn btn-outline-warning ms-2"
                                     onClick={() => actions.toggleFavorite(planet)}
                                 >
